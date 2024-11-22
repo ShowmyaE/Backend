@@ -30,7 +30,7 @@ const initializeDbAndServer = async () => {
 initializeDbAndServer()
 
 
-app.post('/transaction', async (req, res) => {
+app.post('/transactions', async (req, res) => {
     try {
         const { user, amount, transaction_type } = req.body
         let transactionNumber = 1
@@ -69,10 +69,10 @@ app.post('/transaction', async (req, res) => {
 
 })
 
-app.get('/transaction', async (req, res) => {
+app.get('/transactions', async (req, res) => {
     try {
-        const { userId } = req.query;
-        const getUserQuery = `select * from transactionData where user=${userId}`;
+        const { user_id } = req.query;
+        const getUserQuery = `select * from transactionData where user=${user_id}`;
         const userDbDetails = await db.all(getUserQuery);
         console.log('DB value', userDbDetails);
         res.send(userDbDetails)
@@ -83,7 +83,7 @@ app.get('/transaction', async (req, res) => {
 
 })
 
-app.get('/transaction/:transactionId', async (req, res) => {
+app.get('/transactions/:transactionId', async (req, res) => {
     try {
         const { transactionId } = req.params;
         const getUserQuery = `select * from transactionData where transaction_id=${transactionId}`;
@@ -97,7 +97,7 @@ app.get('/transaction/:transactionId', async (req, res) => {
 
 })
 
-app.put('/transaction/:transactionId', async (req, res) => {
+app.put('/transactions/:transactionId', async (req, res) => {
     try {
         const { status } = req.body
         const { transactionId } = req.params;
